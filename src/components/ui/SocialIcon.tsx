@@ -1,4 +1,3 @@
-import { Music } from 'lucide-react'
 
 type Props = {
   name: string
@@ -98,6 +97,6 @@ export function SocialIcon({ name, size = 20, className }: Props) {
     case 'youtube': return <YoutubeIcon size={size} className={className} />
     case 'spotify': return <SpotifyIcon size={size} className={className} />
     case 'tiktok': return <TikTokIcon size={size} className={className} />
-    default: return <Music size={size} className={className} />
+    default: return null
   }
 }
