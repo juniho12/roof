@@ -12,7 +12,6 @@ type Props = {
 export function PhotoSlider({ images, section }: Props) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    dragFree: false,
     align: 'start',
   })
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -68,9 +67,9 @@ export function PhotoSlider({ images, section }: Props) {
 
       {/* Dots */}
       <div className="flex justify-center gap-2 mt-6">
-        {images.map((_, i) => (
+        {images.map((img, i) => (
           <button
-            key={i}
+            key={img.id}
             onClick={() => emblaApi?.scrollTo(i)}
             className={`w-2 h-2 rounded-full transition-colors ${
               i === selectedIndex ? 'bg-white' : 'bg-white/30'
