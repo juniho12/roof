@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import { Play } from 'lucide-react'
@@ -18,8 +18,8 @@ export function VideoCarousel({ videos }: Props) {
   return (
     <section className="bg-roof-darker py-16">
       <div className="max-w-6xl mx-auto px-6 mb-8">
-        <h2 className="font-bebas text-white text-4xl md:text-5xl">
-          VOCÊ NO ROLE DA ROOF!
+        <h2 className="font-display text-white text-4xl md:text-5xl">
+          VOCÃŠ NO ROLE DA ROOF!
         </h2>
       </div>
 

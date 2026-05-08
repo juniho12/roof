@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect, useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { SortableImageList } from '@/components/admin/SortableImageList'
@@ -20,7 +20,7 @@ export default function SliderPage() {
       supabase.from('slider_images').select('*').order('display_order'),
       supabase.from('content_section_settings')
         .select('*')
-        .eq('title', 'VEJA O QUE TE ESPERA NAS PRÓXIMAS EDIÇÕES')
+        .eq('title', 'VEJA O QUE TE ESPERA NAS PRÃ“XIMAS EDIÃ‡Ã•ES')
         .single(),
     ]).then(([{ data: imgs }, { data: sec }]) => {
       setImages(imgs ?? [])
@@ -82,18 +82,18 @@ export default function SliderPage() {
       />
 
       <div className="bg-roof-sidebar border border-white/10 p-6 mb-6 max-w-2xl">
-        <h2 className="text-white font-bold mb-4">Textos da Seção</h2>
+        <h2 className="text-white font-bold mb-4">Textos da SeÃ§Ã£o</h2>
         <div className="flex flex-col gap-3 mb-4">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Título"
+            placeholder="TÃ­tulo"
             className="bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm"
           />
           <input
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
-            placeholder="Subtítulo"
+            placeholder="SubtÃ­tulo"
             className="bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm"
           />
         </div>

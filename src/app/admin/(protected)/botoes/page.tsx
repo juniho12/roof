@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { ToggleRow } from '@/components/admin/ToggleRow'
@@ -32,11 +32,11 @@ export default function BotoesPage() {
 
   return (
     <div>
-      <PageHeader title="Botões e Links" description="Gerencie as URLs e status de todos os botões e links" />
+      <PageHeader title="BotÃµes e Links" description="Gerencie as URLs e status de todos os botÃµes e links" />
       <div className="max-w-2xl space-y-8">
         <div className="bg-roof-sidebar border border-white/10 p-6">
-          <h2 className="text-white font-bold mb-2">Botões</h2>
-          <p className="text-white/40 text-xs mb-4">Botões com imagem que aparecem na LP</p>
+          <h2 className="text-white font-bold mb-2">BotÃµes</h2>
+          <p className="text-white/40 text-xs mb-4">BotÃµes com imagem que aparecem na LP</p>
           {buttons.map((btn) => (
             <ToggleRow
               key={btn.id}

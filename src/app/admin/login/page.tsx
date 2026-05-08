@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -32,7 +32,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-roof-dark flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <span className="font-bebas text-4xl">
+          <span className="font-display text-4xl">
             <span className="text-roof-red">ROOF!</span>
             <span className="text-white"> ADMIN</span>
           </span>

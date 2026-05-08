@@ -1,11 +1,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { Hero } from '@/components/landing/Hero'
-import { RedBanner } from '@/components/landing/RedBanner'
 import { PhotoSlider } from '@/components/landing/PhotoSlider'
 import { AboutSection } from '@/components/landing/AboutSection'
 import { StatsBanner } from '@/components/landing/StatsBanner'
 import { ProdutoraSection } from '@/components/landing/ProdutoraSection'
-import { VideoCarousel } from '@/components/landing/VideoCarousel'
 import { Footer } from '@/components/landing/Footer'
 
 export const revalidate = 300
@@ -68,16 +66,20 @@ export default async function HomePage() {
         socialLinks={data.footerLinks}
       />
       {data.contentSection && (
-        <>
-          <RedBanner title={data.contentSection.title} />
-          <PhotoSlider images={data.sliderImages} section={data.contentSection} />
-        </>
+        <PhotoSlider
+          images={data.sliderImages}
+          videos={data.videos}
+          section={data.contentSection}
+        />
       )}
       <AboutSection />
       <StatsBanner />
       <ProdutoraSection images={data.aboutImages} />
-      <VideoCarousel videos={data.videos} />
-      <Footer settings={data.footerSettings} links={data.footerLinks} />
+      <Footer
+        settings={data.footerSettings}
+        links={data.footerLinks}
+        logoUrl={data.hero.logo_url}
+      />
     </main>
   )
 }

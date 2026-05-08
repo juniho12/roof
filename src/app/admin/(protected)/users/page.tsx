@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+﻿import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { PageHeader } from '@/components/admin/PageHeader'
 
@@ -20,16 +20,16 @@ export default async function UsersPage() {
 
   return (
     <div>
-      <PageHeader title="Gerenciamento de Usuários" description="Gerencie os usuários do sistema e suas permissões." />
+      <PageHeader title="Gerenciamento de UsuÃ¡rios" description="Gerencie os usuÃ¡rios do sistema e suas permissÃµes." />
       <div className="bg-roof-sidebar border border-white/10 max-w-4xl">
         <div className="p-6 border-b border-white/10">
-          <h2 className="text-white font-bold">Usuários</h2>
-          <p className="text-white/40 text-xs mt-1">Gerencie os usuários do sistema</p>
+          <h2 className="text-white font-bold">UsuÃ¡rios</h2>
+          <p className="text-white/40 text-xs mt-1">Gerencie os usuÃ¡rios do sistema</p>
         </div>
         <table className="w-full">
           <thead>
             <tr className="border-b border-white/10">
-              <th className="text-left text-white/40 text-xs px-6 py-3">Usuário</th>
+              <th className="text-left text-white/40 text-xs px-6 py-3">UsuÃ¡rio</th>
               <th className="text-left text-white/40 text-xs px-6 py-3">Role</th>
               <th className="text-left text-white/40 text-xs px-6 py-3">Criado em</th>
             </tr>

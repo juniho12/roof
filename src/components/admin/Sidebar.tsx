@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
@@ -18,12 +18,12 @@ const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/hero', label: 'Hero Section', icon: ImageIcon },
   { href: '/admin/slider', label: 'Slider de Imagens', icon: SlidersHorizontal },
-  { href: '/admin/produtora', label: 'Seção Produtora', icon: ImageIcon },
-  { href: '/admin/videos', label: 'Carrossel de Vídeos', icon: Film },
-  { href: '/admin/botoes', label: 'Botões e Links', icon: Link2 },
+  { href: '/admin/produtora', label: 'SeÃ§Ã£o Produtora', icon: ImageIcon },
+  { href: '/admin/videos', label: 'Carrossel de VÃ­deos', icon: Film },
+  { href: '/admin/botoes', label: 'BotÃµes e Links', icon: Link2 },
   { href: '/admin/footer-links', label: 'Links do Footer', icon: Share2 },
   { href: '/admin/footer-settings', label: 'Config. Footer', icon: Settings },
-  { href: '/admin/users', label: 'Usuários', icon: Users },
+  { href: '/admin/users', label: 'UsuÃ¡rios', icon: Users },
 ]
 
 export function Sidebar() {
@@ -41,7 +41,7 @@ export function Sidebar() {
     <aside className="w-60 min-h-screen bg-roof-sidebar flex flex-col flex-shrink-0">
       {/* Logo */}
       <div className="p-6 border-b border-white/10">
-        <span className="font-bebas text-2xl">
+        <span className="font-display text-2xl">
           <span className="text-roof-red">ROOF!</span>
           <span className="text-white/60 text-base ml-1">ADMIN</span>
         </span>

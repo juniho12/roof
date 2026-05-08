@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { SocialIcon } from '@/components/ui/SocialIcon'
@@ -24,7 +24,7 @@ export default function FooterLinksPage() {
     <div>
       <PageHeader
         title="Links do Footer"
-        description="Gerencie as redes sociais do rodapé. Links sem URL não serão exibidos."
+        description="Gerencie as redes sociais do rodapÃ©. Links sem URL nÃ£o serÃ£o exibidos."
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
         {links.map((link) => (

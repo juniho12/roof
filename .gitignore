@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local debug/comparison artifacts
+/comparison
+compare.mjs
+debug.mjs
+original-site.html
+original-site.css
+original-site.js

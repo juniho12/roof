@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { ImageUploader } from '@/components/admin/ImageUploader'
@@ -32,7 +32,7 @@ export default function HeroPage() {
     <div>
       <PageHeader
         title="Hero Section"
-        description="Gerencie o conteúdo da seção principal da Landing Page"
+        description="Gerencie o conteÃºdo da seÃ§Ã£o principal da Landing Page"
       />
       <div className="bg-roof-sidebar border border-white/10 p-6 max-w-2xl">
         <ImageUploader

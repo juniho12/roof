@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { VideoList } from '@/components/admin/VideoList'
@@ -53,16 +53,16 @@ export default function VideosPage() {
   }
 
   async function deleteVideo(id: string) {
-    if (!confirm('Deletar vídeo?')) return
+    if (!confirm('Deletar vÃ­deo?')) return
     await supabase.from('video_carousel').delete().eq('id', id)
     setVideos((prev) => prev.filter((v) => v.id !== id))
   }
 
   return (
     <div>
-      <PageHeader title="Carrossel de Vídeos" description="Gerencie os vídeos do YouTube na landing page" />
+      <PageHeader title="Carrossel de VÃ­deos" description="Gerencie os vÃ­deos do YouTube na landing page" />
       <div className="bg-roof-sidebar border border-white/10 p-6 mb-6 max-w-2xl">
-        <h2 className="text-white font-bold mb-3">Adicionar Vídeo</h2>
+        <h2 className="text-white font-bold mb-3">Adicionar VÃ­deo</h2>
         <div className="flex gap-2">
           <input
             type="url"
@@ -82,7 +82,7 @@ export default function VideosPage() {
         </div>
       </div>
       <div className="max-w-2xl">
-        <h2 className="text-white font-bold mb-4">Vídeos</h2>
+        <h2 className="text-white font-bold mb-4">VÃ­deos</h2>
         <VideoList items={videos} onToggle={toggleVideo} onDelete={deleteVideo} />
       </div>
     </div>

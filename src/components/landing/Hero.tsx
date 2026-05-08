@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { Ticket, Users, CircleHelp } from 'lucide-react'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import type { HeroSection, HeroButton, HeroLink, FooterLink } from '@/types/database'
 
@@ -11,93 +11,116 @@ type Props = {
 }
 
 export function Hero({ hero, buttons, links, socialLinks }: Props) {
-  return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {hero.background_image_url && (
-        <Image
-          src={hero.background_image_url}
-          alt="ROOF! Produtora"
-          fill
-          className="object-cover object-center"
-          priority
-        />
-      )}
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/55" />
+  const [btn1, btn2] = buttons
+  const [link1, link2] = links
 
-      {/* Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">
-        {/* Logo */}
+  const renderButton = (btn: HeroButton | undefined, variant: 'light' | 'dark') => {
+    const isActive = btn?.is_active && btn?.link_url
+    const lightActive = 'bg-white text-black cursor-pointer'
+    const lightInactive = 'bg-white/20 text-white/50 cursor-not-allowed pointer-events-none'
+    const darkActive = 'bg-black text-white cursor-pointer border border-white/20'
+    const darkInactive = 'bg-black/50 text-white/50 cursor-not-allowed pointer-events-none'
+    const colorClasses =
+      variant === 'light'
+        ? isActive ? lightActive : lightInactive
+        : isActive ? darkActive : darkInactive
+
+    return (
+      <a
+        href={btn?.link_url ?? '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-lg font-medium transition-all hover:scale-105 ${colorClasses}`}
+      >
+        {btn?.image_url ? (
+          <Image src={btn.image_url} alt="" width={80} height={32} className="h-8 w-auto object-contain" />
+        ) : (
+          <Ticket className="w-6 h-6" />
+        )}
+        <div className="text-left">
+          <div className="text-xs uppercase tracking-wide opacity-70">
+            {variant === 'light' ? 'Ingressos Oficiais' : 'Sem Taxa'}
+          </div>
+          <div className="font-bold">{btn?.name ?? (variant === 'light' ? 'BLACKTAG' : 'VIA PIX')}</div>
+        </div>
+      </a>
+    )
+  }
+
+  const renderLink = (link: HeroLink | undefined, Icon: typeof Users, fallback: string) => {
+    const isActive = link?.is_active && link?.link_url
+    const colorClasses = isActive
+      ? 'bg-white/10 text-white hover:bg-white/20 cursor-pointer backdrop-blur-sm'
+      : 'bg-white/5 text-white/30 cursor-not-allowed pointer-events-none'
+
+    return (
+      <a
+        href={link?.link_url ?? '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-lg transition-all ${colorClasses}`}
+      >
+        <Icon className="w-4 h-4" />
+        <span className="text-sm">{link?.text ?? fallback}</span>
+      </a>
+    )
+  }
+
+  return (
+    <section
+      className="relative min-h-[80vh] flex flex-col items-center justify-center py-16"
+      style={{
+        background: hero.background_image_url
+          ? `url(${hero.background_image_url}) center/cover no-repeat`
+          : 'linear-gradient(180deg, hsl(280 30% 15%) 0%, hsl(280 20% 8%) 50%, hsl(0 0% 5%) 100%)',
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+
+      <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
         {hero.logo_url && (
-          <Image
-            src={hero.logo_url}
-            alt="ROOF! Produtora"
-            width={480}
-            height={140}
-            className="mb-8 max-w-[80vw]"
-            priority
-          />
+          <div className="mb-6">
+            <Image
+              src={hero.logo_url}
+              alt="ROOF! Produtora"
+              width={400}
+              height={120}
+              className="h-16 md:h-24 lg:h-28 w-auto object-contain"
+              priority
+            />
+          </div>
         )}
 
-        {/* CTA Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-5">
-          {buttons.map((btn) => (
-            <a
-              key={btn.id}
-              href={btn.link_url ?? '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-6 py-3 font-bold text-sm uppercase tracking-widest transition-opacity hover:opacity-80 ${
-                btn.image_url
-                  ? 'bg-white text-black'
-                  : 'border-2 border-white bg-transparent text-white'
-              }`}
-            >
-              {btn.image_url && (
-                <Image
-                  src={btn.image_url}
-                  alt={btn.name}
-                  width={80}
-                  height={28}
-                  className="object-contain h-7 w-auto"
-                />
-              )}
-              <span>{btn.name}</span>
-            </a>
-          ))}
+        <p className="text-white/90 text-lg md:text-xl mb-10">
+          Valor e respeito ao Funk desde 2019!
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 mb-6 w-full max-w-xl">
+          {renderButton(btn1, 'light')}
+          {renderButton(btn2, 'dark')}
         </div>
 
-        {/* Text Links */}
-        <div className="flex flex-wrap justify-center gap-6">
-          {links.map((link) => (
-            <a
-              key={link.id}
-              href={link.link_url ?? '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-white/80 text-sm hover:text-white transition-colors"
-            >
-              {link.text}
-              <ArrowRight size={14} />
-            </a>
-          ))}
+        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mb-8">
+          {renderLink(link1, Users, 'Faça parte do nosso time')}
+          {renderLink(link2, CircleHelp, 'Outras dúvidas e suporte')}
         </div>
-      </div>
 
-      {/* Social Icons — bottom */}
-      <div className="absolute bottom-8 left-0 right-0 z-10 flex justify-center gap-5">
-        {socialLinks.map((social) => (
-          <a
-            key={social.id}
-            href={social.link_url ?? '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/70 hover:text-white transition-colors"
-            aria-label={social.name}
-          >
-            <SocialIcon name={social.icon_name} size={18} />
-          </a>
-        ))}
+        {socialLinks.length > 0 && (
+          <div className="flex items-center justify-center gap-5">
+            {socialLinks.map((social) => (
+              <a
+                key={social.id}
+                href={social.link_url ?? '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-white transition-colors hover:scale-110"
+                title={social.name}
+              >
+                <SocialIcon name={social.icon_name} size={24} />
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

@@ -1,11 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
-:root {
-  --font-bebas: 'Bebas Neue', sans-serif;
-  --font-inter: 'Inter', system-ui, sans-serif;
+@theme {
+  --font-display: 'Tactic Sans', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-roof-red: #99001f;
+  --color-roof-dark: #140004;
+  --color-roof-darker: #140004;
+  --color-roof-sidebar: #1a1a1a;
+}
+
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSans-Thn.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExd-ThnIt.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSans-Reg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExd-Reg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExtExd-Med.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExd-MedIt.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExtExd-Bld.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExd-BldIt.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExd-Blk.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tactic Sans';
+  src: url('/fonts/TacticSansExtExd-Blk.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
@@ -17,7 +91,7 @@ html {
 }
 
 body {
-  background-color: #0a0a0a;
+  background-color: #140004;
   color: #ffffff;
-  font-family: var(--font-inter);
+  font-family: var(--font-sans);
 }

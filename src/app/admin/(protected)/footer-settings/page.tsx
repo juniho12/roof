@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -32,14 +32,14 @@ export default function FooterSettingsPage() {
       .update({ phone, email, cnpj, updated_at: new Date().toISOString() })
       .eq('id', settings.id)
     setSaving(false)
-    alert('Configurações salvas!')
+    alert('ConfiguraÃ§Ãµes salvas!')
   }
 
   return (
     <div>
-      <PageHeader title="Configurações do Footer" description="Gerencie as informações de contato exibidas no rodapé" />
+      <PageHeader title="ConfiguraÃ§Ãµes do Footer" description="Gerencie as informaÃ§Ãµes de contato exibidas no rodapÃ©" />
       <div className="bg-roof-sidebar border border-white/10 p-6 max-w-xl">
-        <h2 className="text-white font-bold mb-6">Informações de Contato</h2>
+        <h2 className="text-white font-bold mb-6">InformaÃ§Ãµes de Contato</h2>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="text-white/50 text-xs mb-1 block">Telefone</label>
@@ -60,7 +60,7 @@ export default function FooterSettingsPage() {
           className="flex items-center gap-2 bg-roof-red text-white px-6 py-3 font-bold text-sm hover:bg-red-700 transition-colors disabled:opacity-50"
         >
           <Save size={14} />
-          {saving ? 'Salvando...' : 'Salvar Configurações'}
+          {saving ? 'Salvando...' : 'Salvar ConfiguraÃ§Ãµes'}
         </button>
       </div>
     </div>

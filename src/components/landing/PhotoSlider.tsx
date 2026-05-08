@@ -1,82 +1,212 @@
 'use client'
-import useEmblaCarousel from 'embla-carousel-react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
-import type { SliderImage, ContentSectionSettings } from '@/types/database'
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import type { SliderImage, ContentSectionSettings, VideoCarouselItem } from '@/types/database'
 
 type Props = {
   images: SliderImage[]
+  videos: VideoCarouselItem[]
   section: ContentSectionSettings
 }
 
-export function PhotoSlider({ images, section }: Props) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: 'start',
-  })
-  const [selectedIndex, setSelectedIndex] = useState(0)
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi])
+function ImageCard({ images }: { images: SliderImage[] }) {
+  const [idx, setIdx] = useState(0)
+  const active = images.filter((i) => i.is_active)
 
   useEffect(() => {
-    if (!emblaApi) return
-    emblaApi.on('select', onSelect)
-    return () => { emblaApi.off('select', onSelect) }
-  }, [emblaApi, onSelect])
+    if (active.length <= 1) return
+    const t = setInterval(() => setIdx((i) => (i + 1) % active.length), 5000)
+    return () => clearInterval(t)
+  }, [active.length])
+
+  if (active.length === 0) {
+    return <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
+  }
+
+  const open = (url: string | null) => {
+    if (url) window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  const prev = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIdx((i) => (i === 0 ? active.length - 1 : i - 1))
+  }
+
+  const next = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIdx((i) => (i + 1) % active.length)
+  }
 
   return (
-    <section className="bg-roof-darker py-16">
-      <div className="max-w-6xl mx-auto px-6 mb-10">
-        <h2 className="font-bebas text-white text-4xl md:text-5xl mb-2">
-          {section.title}
-        </h2>
-        {section.subtitle && (
-          <p className="text-white/60 text-sm">{section.subtitle}</p>
-        )}
-      </div>
+    <div className="relative w-full h-full group">
+      {active.map((img, i) => (
+        <div
+          key={img.id}
+          onClick={() => open(img.link_url)}
+          className={`absolute inset-0 transition-opacity duration-500 ${
+            i === idx ? 'opacity-100' : 'opacity-0'
+          } ${img.link_url ? 'cursor-pointer' : ''}`}
+        >
+          <Image
+            src={img.image_url}
+            alt={img.alt_text ?? `Slide ${i + 1}`}
+            fill
+            className="object-cover"
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+        </div>
+      ))}
+      {active.length > 1 && (
+        <>
+          <button
+            onClick={prev}
+            aria-label="Anterior"
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={next}
+            aria-label="Próximo"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            {active.map((img, i) => (
+              <button
+                key={img.id}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIdx(i)
+                }}
+                aria-label={`Slide ${i + 1}`}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  i === idx ? 'bg-white' : 'bg-white/40'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
 
-      <div className="overflow-hidden px-6" ref={emblaRef}>
-        <div className="flex gap-3">
-          {images.map((img) => (
-            <div
-              key={img.id}
-              className="relative flex-[0_0_85%] sm:flex-[0_0_55%] md:flex-[0_0_42%] lg:flex-[0_0_32%]"
-            >
-              <a
-                href={img.link_url ?? '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <Image
-                  src={img.image_url}
-                  alt={img.alt_text ?? 'ROOF! evento'}
-                  width={600}
-                  height={400}
-                  className="w-full h-64 md:h-80 object-cover"
-                  loading="lazy"
-                />
-              </a>
-            </div>
-          ))}
+function VideoCard({ videos }: { videos: VideoCarouselItem[] }) {
+  const [idx, setIdx] = useState(0)
+  const active = videos.filter((v) => v.is_active)
+
+  useEffect(() => {
+    if (active.length <= 1) return
+    const t = setInterval(() => setIdx((i) => (i + 1) % active.length), 5000)
+    return () => clearInterval(t)
+  }, [active.length])
+
+  if (active.length === 0) {
+    return <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
+  }
+
+  const open = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  const prev = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIdx((i) => (i === 0 ? active.length - 1 : i - 1))
+  }
+
+  const next = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIdx((i) => (i + 1) % active.length)
+  }
+
+  return (
+    <div className="relative w-full h-full group cursor-pointer" onClick={() => open(active[idx].video_url)}>
+      {active.map((v, i) => (
+        <div
+          key={v.id}
+          className={`absolute inset-0 transition-opacity duration-500 ${
+            i === idx ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          {v.thumbnail_url ? (
+            <Image
+              src={v.thumbnail_url}
+              alt={v.title ?? `Vídeo ${i + 1}`}
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
+          )}
+        </div>
+      ))}
+      <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+        <div className="w-16 h-16 rounded-full bg-roof-red flex items-center justify-center">
+          <Play className="w-8 h-8 text-white fill-white ml-1" />
         </div>
       </div>
-
-      {/* Dots */}
-      <div className="flex justify-center gap-2 mt-6">
-        {images.map((img, i) => (
+      {active.length > 1 && (
+        <>
           <button
-            key={img.id}
-            onClick={() => emblaApi?.scrollTo(i)}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              i === selectedIndex ? 'bg-white' : 'bg-white/30'
-            }`}
-            aria-label={`Slide ${i + 1}`}
-          />
-        ))}
+            onClick={prev}
+            aria-label="Anterior"
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={next}
+            aria-label="Próximo"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            {active.map((v, i) => (
+              <button
+                key={v.id}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIdx(i)
+                }}
+                aria-label={`Vídeo ${i + 1}`}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  i === idx ? 'bg-white' : 'bg-white/40'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+export function PhotoSlider({ images, videos, section }: Props) {
+  return (
+    <section className="py-16 bg-[#99001f]">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-10">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white mb-3">
+            {section.title}
+          </h2>
+          {section.subtitle && (
+            <p className="text-white/80 max-w-2xl mx-auto">{section.subtitle}</p>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-black/20">
+            <ImageCard images={images} />
+          </div>
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-black/20">
+            <VideoCard videos={videos} />
+          </div>
+        </div>
       </div>
     </section>
   )
