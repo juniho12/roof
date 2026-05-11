@@ -48,7 +48,7 @@ function ImageCard({ images }: { images: SliderImage[] }) {
             i === idx ? 'opacity-100' : 'opacity-0'
           } ${img.link_url ? 'cursor-pointer' : ''}`}
         >
-          <Image
+          <Image quality={60}
             src={img.image_url}
             alt={img.alt_text ?? `Slide ${i + 1}`}
             fill
@@ -133,7 +133,7 @@ function VideoCard({ videos }: { videos: VideoCarouselItem[] }) {
           }`}
         >
           {v.thumbnail_url ? (
-            <Image
+            <Image quality={60}
               src={v.thumbnail_url}
               alt={v.title ?? `Vídeo ${i + 1}`}
               fill

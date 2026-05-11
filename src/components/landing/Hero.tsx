@@ -33,7 +33,7 @@ export function Hero({ hero, buttons, links, socialLinks }: Props) {
         className={`flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-lg font-medium transition-all hover:scale-105 ${colorClasses}`}
       >
         {btn?.image_url ? (
-          <Image
+          <Image quality={60}
             src={btn.image_url}
             alt=""
             width={120}
@@ -89,7 +89,7 @@ export function Hero({ hero, buttons, links, socialLinks }: Props) {
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
         {hero.logo_url && (
           <div className="mb-6">
-            <Image
+            <Image quality={60}
               src={hero.logo_url}
               alt="ROOF! Produtora"
               width={400}

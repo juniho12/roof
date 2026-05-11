@@ -44,7 +44,7 @@ export function ImageUploader({ label, currentUrl, bucket, onUploaded }: Props) 
     <div>
       {preview && (
         <div className="mb-5 relative inline-block">
-          <Image
+          <Image quality={60}
             src={preview}
             alt={label}
             width={400}

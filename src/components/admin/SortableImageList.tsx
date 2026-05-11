@@ -48,7 +48,7 @@ export function SortableImageList({ items, onToggle, onDelete, onMove, onLinkCha
               </button>
             </div>
           )}
-          <Image
+          <Image quality={60}
             src={item.image_url}
             alt={item.alt_text ?? ''}
             width={160}

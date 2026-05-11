@@ -37,7 +37,7 @@ export function VideoList({ items, onToggle, onDelete, onMove, onUpdate }: Props
             </div>
           )}
           {item.thumbnail_url && (
-            <Image
+            <Image quality={60}
               src={item.thumbnail_url}
               alt={item.title ?? 'video'}
               width={160}

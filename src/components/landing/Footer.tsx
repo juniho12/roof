@@ -13,7 +13,7 @@ export function Footer({ settings, logoUrl }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
             {logoUrl ? (
-              <Image
+              <Image quality={60}
                 src={logoUrl}
                 alt="ROOF! Produtora"
                 width={240}

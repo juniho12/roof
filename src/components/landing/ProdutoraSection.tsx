@@ -24,7 +24,7 @@ export function ProdutoraSection({ images }: Props) {
           <div className="grid grid-cols-2 gap-4">
             {images.slice(0, 4).map((img) => (
               <div key={img.id} className="relative aspect-square rounded-xl overflow-hidden">
-                <Image
+                <Image quality={60}
                   src={img.image_url}
                   alt={img.alt_text ?? 'ROOF! Produtora'}
                   fill
