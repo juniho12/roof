@@ -77,7 +77,6 @@ export default async function HomePage() {
       <ProdutoraSection images={data.aboutImages} />
       <Footer
         settings={data.footerSettings}
-        links={data.footerLinks}
         logoUrl={data.hero.logo_url}
       />
     </main>

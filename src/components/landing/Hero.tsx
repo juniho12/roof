@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Ticket, Users, CircleHelp } from 'lucide-react'
+import { Ticket, QrCode, Users, CircleHelp } from 'lucide-react'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import type { HeroSection, HeroButton, HeroLink, FooterLink } from '@/types/database'
 
@@ -33,15 +33,24 @@ export function Hero({ hero, buttons, links, socialLinks }: Props) {
         className={`flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-lg font-medium transition-all hover:scale-105 ${colorClasses}`}
       >
         {btn?.image_url ? (
-          <Image src={btn.image_url} alt="" width={80} height={32} className="h-8 w-auto object-contain" />
-        ) : (
+          <Image
+            src={btn.image_url}
+            alt=""
+            width={120}
+            height={32}
+            className="h-8 w-auto object-contain"
+            loading="lazy"
+          />
+        ) : variant === 'light' ? (
           <Ticket className="w-6 h-6" />
+        ) : (
+          <QrCode className="w-6 h-6" />
         )}
         <div className="text-left">
           <div className="text-xs uppercase tracking-wide opacity-70">
             {variant === 'light' ? 'Ingressos Oficiais' : 'Sem Taxa'}
           </div>
-          <div className="font-bold">{btn?.name ?? (variant === 'light' ? 'BLACKTAG' : 'VIA PIX')}</div>
+          <div className="font-bold">{variant === 'light' ? 'BLACKTAG' : 'VIA PIX'}</div>
         </div>
       </a>
     )

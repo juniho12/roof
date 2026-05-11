@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:roofprodutora.com.br)",
+      "Bash(curl -sL https://roofprodutora.com.br -o /tmp/roof.html -A \"Mozilla/5.0\")",
+      "Read(//tmp/**)",
+      "Bash(type C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.html)",
+      "Bash(powershell -Command \"Get-Content -Raw /tmp/roof.html\")",
+      "Bash(powershell -Command \"if \\(Test-Path 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.html'\\) { Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.html' }\")",
+      "Bash(curl -sL \"https://roofprodutora.com.br/assets/index-B2q7sikU.js\" -o /tmp/roof.js -A \"Mozilla/5.0\")",
+      "Bash(powershell *)",
+      "PowerShell(Get-Content *)",
+      "Bash(curl -sL \"https://roofprodutora.com.br/assets/index-C9OQcVAV.css\" -o /tmp/roof.css -A \"Mozilla/5.0\")",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.css'; $idx = $c.IndexOf\\('.container'\\); while\\($idx -ge 0\\){ Write-Output $c.Substring\\($idx, [Math]::Min\\(400, $c.Length-$idx\\)\\); Write-Output \"---\"; $idx = $c.IndexOf\\('.container', $idx+1\\); if\\($idx -gt 5000 -and $idx -lt 0\\){break} })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.css'; $idx = $c.IndexOf\\('--primary'\\); if\\($idx -gt 0\\){ $c.Substring\\($idx, 300\\) }; Write-Output \"---\"; $idx2 = $c.IndexOf\\('.text-primary'\\); if\\($idx2 -gt 0\\){ $c.Substring\\($idx2, 200\\) })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('Ingressos oficiais','ingressos oficiais','Sem taxa','sem taxa','SEM TAXA','OFICIAIS'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\"; Write-Output $c.Substring\\([Math]::Max\\(0,$idx-1500\\), 2500\\); Write-Output \"---\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('BLACKTAG','VIA PIX','VIAPIX','via pix','TicketIcon','Pix','Ticket'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; $idx = $c.IndexOf\\('=Ye\\(\"ek\"'\\); Write-Output \"ek: $idx\"; foreach\\($sym in @\\('ek','QE','Z0','BE','Y0'\\)\\){ $pattern = \"$sym=Ye\\(\"; $idx = $c.IndexOf\\($pattern\\); if\\($idx -gt 0\\){ Write-Output \"$sym at $idx\"; Write-Output $c.Substring\\($idx, 250\\); Write-Output \"---\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($sym in @\\('ek','QE','Z0','BE'\\)\\){ $idx = $c.IndexOf\\(\"const $sym=\"\\); if\\($idx -lt 0\\){ $idx = $c.IndexOf\\(\"$sym=zy\\(\"\\) }; if\\($idx -lt 0\\){ $idx = $c.IndexOf\\(\",$sym=\"\\) }; if\\($idx -gt 0\\){ Write-Output \"$sym at $idx\"; Write-Output $c.Substring\\($idx, 200\\); Write-Output \"---\" } })",
+      "Bash(curl -sL https://roofprodutora.com.br/favicon.png -o C:\\\\Users\\\\Pichau\\\\Desktop\\\\Work\\\\roof\\\\public\\\\favicon.png)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Copy-Item *)",
+      "mcp__plugin_supabase_supabase__list_projects",
+      "mcp__plugin_supabase_supabase__execute_sql",
+      "mcp__plugin_supabase_supabase__apply_migration",
+      "Bash(curl -sLo /dev/null -w \"%{http_code}\\\\n\" https://roofprodutora.com.br/admin -A \"Mozilla/5.0\")",
+      "Bash(curl -sLo /dev/null -w \"%{http_code}\\\\n\" https://roofprodutora.com.br/auth -A \"Mozilla/5.0\")",
+      "Bash(curl -sLo /dev/null -w \"%{http_code}\\\\n\" https://roofprodutora.com.br/login -A \"Mozilla/5.0\")",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('/admin','AdminLayout','/auth','admin-sidebar','admin-layout','AdminPanel','AdminSidebar','DashboardCard'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('path:\"/auth\"','path:\"/admin\"','element:','Dashboard','Painel','Gerenciar'\\)\\){ $idx = 0; while\\($idx -ge 0\\){ $idx = $c.IndexOf\\($q, $idx\\); if\\($idx -gt 0\\){ Write-Output \\(\"FOUND: $q at \" + $idx + \" :: \" + $c.Substring\\($idx, [Math]::Min\\(120, $c.Length-$idx\\)\\)\\); $idx += $q.Length; if\\($idx -gt $c.Length\\){break} } else { break } } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('ChevronUp','ChevronDown','display_order','MoveUp','MoveDown','ArrowUp','ArrowDown'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('moveUp','moveDown','reorder','Reorder','onMove','swap'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('GripVertical','useSortable','SortableContext','dnd-kit','arrayMove','rectSortingStrategy','verticalListSortingStrategy'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\" } })",
+      "PowerShell($c = Get-Content -Raw 'C:\\\\Users\\\\Pichau\\\\AppData\\\\Local\\\\Temp\\\\roof.js'; foreach\\($q in @\\('about-images','SeÃ§Ã£o Produtora','Produtora','SecaoProdutora','AboutAdmin'\\)\\){ $idx = $c.IndexOf\\($q\\); if\\($idx -gt 0\\){ Write-Output \"FOUND: $q at $idx\" } })"
+    ]
+  }
+}

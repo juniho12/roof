@@ -12,7 +12,7 @@ export function ProdutoraSection({ images }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col justify-center">
             <h2 className="font-display text-4xl md:text-5xl text-white mb-6">
-              A PRODUTORA
+              A PRODUTORA<span className="text-[hsl(0,84%,50%)]">.</span>
             </h2>
             <p className="text-white/70 text-lg leading-relaxed">
               A ROOF! nasceu em 2019 e hoje é referência em eventos de funk open bar

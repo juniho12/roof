@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -59,7 +59,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-roof-red text-white py-3 font-bold uppercase tracking-widest hover:bg-red-700 transition-colors disabled:opacity-50"
+            className="bg-roof-red text-white rounded-md py-3 font-bold uppercase tracking-widest hover:bg-red-700 transition-colors disabled:opacity-50"
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>

@@ -1,4 +1,4 @@
-﻿import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { DashboardCard } from '@/components/admin/DashboardCard'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SlidersHorizontal, Film, Link2, Share2 } from 'lucide-react'
@@ -29,32 +29,41 @@ export default async function AdminDashboard() {
         description={`Bem-vindo, ${user?.email}`}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <DashboardCard label="Imagens no Slider" count={sliderCount ?? 0} icon={SlidersHorizontal} />
-        <DashboardCard label="VÃ­deos no Carrossel" count={videosCount ?? 0} icon={Film} color="#f97316" />
-        <DashboardCard label="BotÃµes" count={buttonsCount ?? 0} icon={Link2} color="#22c55e" />
-        <DashboardCard label="Links" count={linksCount ?? 0} icon={Share2} color="#f59e0b" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <DashboardCard label="Imagens no Slider" count={sliderCount ?? 0} icon={SlidersHorizontal} color="#3b82f6" />
+        <DashboardCard label="Vídeos no Carrossel" count={videosCount ?? 0} icon={Film} color="#a855f7" />
+        <DashboardCard label="Botões" count={buttonsCount ?? 0} icon={Link2} color="#22c55e" />
+        <DashboardCard label="Links" count={linksCount ?? 0} icon={Share2} color="#f97316" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-roof-sidebar border border-white/10 p-6">
-          <h2 className="font-display text-white text-2xl mb-4">Status do Sistema</h2>
-          <p className="text-white/50 text-sm mb-3">InformaÃ§Ãµes sobre sua conta</p>
-          <div className="flex items-center justify-between border-t border-white/10 py-3">
-            <span className="text-white/50 text-sm">E-mail</span>
-            <span className="text-white text-sm">{user?.email}</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="font-display text-2xl text-gray-900">Status do Sistema</h2>
+            <p className="text-gray-500 text-sm mt-1">Informações sobre sua conta</p>
           </div>
-          <div className="flex items-center justify-between border-t border-white/10 py-3">
-            <span className="text-white/50 text-sm">NÃ­vel de Acesso</span>
-            <span className="text-roof-red font-bold text-sm">Administrador</span>
+          <div className="p-6 space-y-3">
+            <div className="flex justify-between">
+              <span className="text-gray-500">E-mail:</span>
+              <span className="text-gray-900 font-medium">{user?.email}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-500">Nível de Acesso:</span>
+              <span className="text-roof-red font-semibold">Administrador</span>
+            </div>
           </div>
         </div>
 
-        <div className="bg-roof-sidebar border border-white/10 p-6">
-          <h2 className="font-display text-white text-2xl mb-4">AÃ§Ãµes RÃ¡pidas</h2>
-          <p className="text-white/50 text-sm">
-            Use o menu lateral para acessar as diferentes seÃ§Ãµes de gerenciamento de conteÃºdo.
-          </p>
+        <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="font-display text-2xl text-gray-900">Ações Rápidas</h2>
+            <p className="text-gray-500 text-sm mt-1">Gerenciar conteúdo da Landing Page</p>
+          </div>
+          <div className="p-6">
+            <p className="text-gray-600 text-sm">
+              Use o menu lateral para acessar as diferentes seções de gerenciamento de conteúdo.
+            </p>
+          </div>
         </div>
       </div>
     </div>

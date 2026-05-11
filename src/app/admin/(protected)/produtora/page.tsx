@@ -29,6 +29,20 @@ export default function ProdutoraAdminPage() {
     setImages((prev) => prev.filter((img) => img.id !== id))
   }
 
+  async function moveImage(id: string, direction: 'up' | 'down') {
+    const sorted = [...images].sort((a, b) => a.display_order - b.display_order)
+    const idx = sorted.findIndex((i) => i.id === id)
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1
+    if (targetIdx < 0 || targetIdx >= sorted.length) return
+    const a = sorted[idx]
+    const b = sorted[targetIdx]
+    await supabase.from('about_images').update({ display_order: b.display_order }).eq('id', a.id)
+    await supabase.from('about_images').update({ display_order: a.display_order }).eq('id', b.id)
+    sorted[idx] = { ...b, display_order: a.display_order }
+    sorted[targetIdx] = { ...a, display_order: b.display_order }
+    setImages(sorted.sort((x, y) => x.display_order - y.display_order))
+  }
+
   async function uploadImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -53,22 +67,25 @@ export default function ProdutoraAdminPage() {
         title="Seção A Produtora"
         description="Gerencie as imagens da seção A Produtora na landing page"
       />
-      <div className="max-w-2xl">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-white font-bold">Imagens ({images.length})</h2>
+      <div className="bg-white border border-gray-200 rounded-lg p-8 mb-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="font-display text-3xl text-gray-900">Imagens ({images.length})</h2>
+            <p className="text-gray-500 text-sm mt-1">Adicione, remova ou reordene as imagens da seção</p>
+          </div>
           <div>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={uploadImage} />
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="flex items-center gap-2 bg-roof-red text-white px-4 py-2 text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 bg-roof-red text-white rounded-md px-5 py-2.5 text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
             >
-              <Plus size={14} />
+              <Plus size={16} />
               {uploading ? 'Enviando...' : 'Adicionar Imagem'}
             </button>
           </div>
         </div>
-        <SortableImageList items={images} onToggle={toggleImage} onDelete={deleteImage} />
+        <SortableImageList items={images} onToggle={toggleImage} onDelete={deleteImage} onMove={moveImage} />
       </div>
     </div>
   )

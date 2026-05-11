@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-display: 'Tactic Sans', sans-serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Open Sans', system-ui, sans-serif;
 
   --color-roof-red: #99001f;
   --color-roof-dark: #140004;
@@ -94,4 +94,28 @@ body {
   background-color: #140004;
   color: #ffffff;
   font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: 'Tactic Sans', sans-serif;
+  font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Tactic Sans', sans-serif;
+  font-weight: 700;
+}
+
+@utility container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
 }

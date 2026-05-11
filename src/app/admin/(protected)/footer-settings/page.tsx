@@ -1,8 +1,8 @@
-﻿'use client'
+'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { Save } from 'lucide-react'
+import { Save, Phone, Mail, Building2 } from 'lucide-react'
 import type { FooterSettings } from '@/types/database'
 
 export default function FooterSettingsPage() {
@@ -32,35 +32,42 @@ export default function FooterSettingsPage() {
       .update({ phone, email, cnpj, updated_at: new Date().toISOString() })
       .eq('id', settings.id)
     setSaving(false)
-    alert('ConfiguraÃ§Ãµes salvas!')
+    alert('Configurações salvas!')
   }
 
   return (
     <div>
-      <PageHeader title="ConfiguraÃ§Ãµes do Footer" description="Gerencie as informaÃ§Ãµes de contato exibidas no rodapÃ©" />
-      <div className="bg-roof-sidebar border border-white/10 p-6 max-w-xl">
-        <h2 className="text-white font-bold mb-6">InformaÃ§Ãµes de Contato</h2>
-        <div className="grid grid-cols-2 gap-4 mb-4">
+      <PageHeader title="Configurações do Footer" description="Gerencie as informações de contato exibidas no rodapé" />
+      <div className="bg-white border border-gray-200 rounded-lg p-8">
+        <h2 className="font-display text-3xl text-gray-900 mb-1">Informações de Contato</h2>
+        <p className="text-gray-500 text-sm mb-6">Configure o telefone, e-mail e CNPJ que aparecem no footer da Landing Page</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
           <div>
-            <label className="text-white/50 text-xs mb-1 block">Telefone</label>
-            <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm" />
+            <label className="text-gray-700 text-sm font-medium mb-1.5 flex items-center gap-2">
+              <Phone size={14} /> Telefone
+            </label>
+            <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-white text-gray-900 px-3 py-2.5 border border-gray-300 rounded-md outline-none focus:border-roof-red text-sm" />
           </div>
           <div>
-            <label className="text-white/50 text-xs mb-1 block">E-mail</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm" />
+            <label className="text-gray-700 text-sm font-medium mb-1.5 flex items-center gap-2">
+              <Mail size={14} /> E-mail
+            </label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white text-gray-900 px-3 py-2.5 border border-gray-300 rounded-md outline-none focus:border-roof-red text-sm" />
           </div>
         </div>
-        <div className="mb-6">
-          <label className="text-white/50 text-xs mb-1 block">CNPJ</label>
-          <input value={cnpj} onChange={(e) => setCnpj(e.target.value)} className="w-full bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm" />
+        <div className="mb-7">
+          <label className="text-gray-700 text-sm font-medium mb-1.5 flex items-center gap-2">
+            <Building2 size={14} /> CNPJ
+          </label>
+          <input value={cnpj} onChange={(e) => setCnpj(e.target.value)} className="w-full bg-white text-gray-900 px-3 py-2.5 border border-gray-300 rounded-md outline-none focus:border-roof-red text-sm" />
         </div>
         <button
           onClick={save}
           disabled={saving}
-          className="flex items-center gap-2 bg-roof-red text-white px-6 py-3 font-bold text-sm hover:bg-red-700 transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 bg-roof-red text-white rounded-md px-6 py-3 font-bold text-sm hover:bg-red-700 transition-colors disabled:opacity-50"
         >
-          <Save size={14} />
-          {saving ? 'Salvando...' : 'Salvar ConfiguraÃ§Ãµes'}
+          <Save size={16} />
+          {saving ? 'Salvando...' : 'Salvar Configurações'}
         </button>
       </div>
     </div>

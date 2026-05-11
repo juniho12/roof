@@ -54,6 +54,7 @@ function ImageCard({ images }: { images: SliderImage[] }) {
             fill
             className="object-cover"
             sizes="(min-width: 768px) 50vw, 100vw"
+            loading="lazy"
           />
         </div>
       ))}

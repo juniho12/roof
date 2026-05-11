@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { useEffect, useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { SortableImageList } from '@/components/admin/SortableImageList'
@@ -20,7 +20,7 @@ export default function SliderPage() {
       supabase.from('slider_images').select('*').order('display_order'),
       supabase.from('content_section_settings')
         .select('*')
-        .eq('title', 'VEJA O QUE TE ESPERA NAS PRÃ“XIMAS EDIÃ‡Ã•ES')
+        .eq('title', 'VEJA O QUE TE ESPERA NAS PRÓXIMAS EDIÇÕES')
         .single(),
     ]).then(([{ data: imgs }, { data: sec }]) => {
       setImages(imgs ?? [])
@@ -56,6 +56,20 @@ export default function SliderPage() {
     await supabase.from('slider_images').update({ link_url: url }).eq('id', id)
   }
 
+  async function moveImage(id: string, direction: 'up' | 'down') {
+    const sorted = [...images].sort((a, b) => a.display_order - b.display_order)
+    const idx = sorted.findIndex((i) => i.id === id)
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1
+    if (targetIdx < 0 || targetIdx >= sorted.length) return
+    const a = sorted[idx]
+    const b = sorted[targetIdx]
+    await supabase.from('slider_images').update({ display_order: b.display_order }).eq('id', a.id)
+    await supabase.from('slider_images').update({ display_order: a.display_order }).eq('id', b.id)
+    sorted[idx] = { ...b, display_order: a.display_order }
+    sorted[targetIdx] = { ...a, display_order: b.display_order }
+    setImages(sorted.sort((x, y) => x.display_order - y.display_order))
+  }
+
   async function uploadImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -81,42 +95,52 @@ export default function SliderPage() {
         description="Gerencie as imagens e textos do slider"
       />
 
-      <div className="bg-roof-sidebar border border-white/10 p-6 mb-6 max-w-2xl">
-        <h2 className="text-white font-bold mb-4">Textos da SeÃ§Ã£o</h2>
-        <div className="flex flex-col gap-3 mb-4">
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="TÃ­tulo"
-            className="bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm"
-          />
-          <input
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-            placeholder="SubtÃ­tulo"
-            className="bg-roof-dark text-white px-3 py-2 border border-white/10 outline-none focus:border-roof-red text-sm"
-          />
+      <div className="bg-white border border-gray-200 rounded-lg p-8 mb-6">
+        <h2 className="font-display text-3xl text-gray-900 mb-1">Textos da Seção</h2>
+        <p className="text-gray-500 text-sm mb-6">Edite o título e subtítulo exibidos acima do slider</p>
+        <div className="flex flex-col gap-4 mb-6">
+          <div>
+            <label className="text-gray-600 text-xs font-medium block mb-1">Título</label>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Título"
+              className="w-full bg-white text-gray-900 px-3 py-2.5 border border-gray-200 rounded-md outline-none focus:border-roof-red text-sm"
+            />
+          </div>
+          <div>
+            <label className="text-gray-600 text-xs font-medium block mb-1">Subtítulo</label>
+            <input
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+              placeholder="Subtítulo"
+              className="w-full bg-white text-gray-900 px-3 py-2.5 border border-gray-200 rounded-md outline-none focus:border-roof-red text-sm"
+            />
+          </div>
         </div>
         <button
           onClick={saveText}
-          className="flex items-center gap-2 bg-roof-red text-white px-4 py-2 text-sm font-bold hover:bg-red-700 transition-colors"
+          className="flex items-center gap-2 bg-roof-red text-white rounded-md px-5 py-2.5 text-sm font-bold hover:bg-red-700 transition-colors"
         >
-          <Save size={14} />
+          <Save size={16} />
           Salvar Textos
         </button>
       </div>
 
-      <div className="max-w-2xl">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-bold">Imagens</h2>
+      <div className="bg-white border border-gray-200 rounded-lg p-8 mb-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="font-display text-3xl text-gray-900">Imagens</h2>
+            <p className="text-gray-500 text-sm mt-1">Adicione, remova ou reordene as imagens do slider</p>
+          </div>
           <div>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={uploadImage} />
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="flex items-center gap-2 bg-roof-red text-white px-4 py-2 text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 bg-roof-red text-white rounded-md px-5 py-2.5 text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
             >
-              <Plus size={14} />
+              <Plus size={16} />
               {uploading ? 'Enviando...' : 'Adicionar Imagem'}
             </button>
           </div>
@@ -125,6 +149,7 @@ export default function SliderPage() {
           items={images}
           onToggle={toggleImage}
           onDelete={deleteImage}
+          onMove={moveImage}
           onLinkChange={updateLink}
           showLinkField
         />

@@ -1,54 +1,34 @@
-﻿import { createAdminClient } from '@/lib/supabase/admin'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { PageHeader } from '@/components/admin/PageHeader'
+import { UsersTable, type UserRow } from './UsersTable'
 
 export default async function UsersPage() {
-  const supabase = await createClient()
   const adminSupabase = createAdminClient()
 
-  const { data: roles } = await supabase
+  const { data: roles } = await adminSupabase
     .from('user_roles')
     .select('*')
     .order('created_at')
 
   const { data: { users } } = await adminSupabase.auth.admin.listUsers()
 
-  const usersWithRoles = (roles ?? []).map((role) => {
+  const rows: UserRow[] = (roles ?? []).map((role) => {
     const authUser = users?.find((u) => u.id === role.user_id)
-    return { ...role, email: authUser?.email ?? 'N/A' }
+    return {
+      id: role.user_id,
+      email: authUser?.email ?? 'N/A',
+      role: role.role,
+      created_at: role.created_at,
+    }
   })
 
   return (
     <div>
-      <PageHeader title="Gerenciamento de UsuÃ¡rios" description="Gerencie os usuÃ¡rios do sistema e suas permissÃµes." />
-      <div className="bg-roof-sidebar border border-white/10 max-w-4xl">
-        <div className="p-6 border-b border-white/10">
-          <h2 className="text-white font-bold">UsuÃ¡rios</h2>
-          <p className="text-white/40 text-xs mt-1">Gerencie os usuÃ¡rios do sistema</p>
-        </div>
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-white/10">
-              <th className="text-left text-white/40 text-xs px-6 py-3">UsuÃ¡rio</th>
-              <th className="text-left text-white/40 text-xs px-6 py-3">Role</th>
-              <th className="text-left text-white/40 text-xs px-6 py-3">Criado em</th>
-            </tr>
-          </thead>
-          <tbody>
-            {usersWithRoles.map((user) => (
-              <tr key={user.id} className="border-b border-white/5">
-                <td className="px-6 py-4 text-white text-sm">{user.email}</td>
-                <td className="px-6 py-4">
-                  <span className="bg-roof-red text-white text-xs px-2 py-1 font-bold uppercase">{user.role}</span>
-                </td>
-                <td className="px-6 py-4 text-white/40 text-xs">
-                  {new Date(user.created_at).toLocaleDateString('pt-BR')}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <PageHeader
+        title="Gerenciamento de Usuários"
+        description="Gerencie usuários e permissões do sistema"
+      />
+      <UsersTable users={rows} />
     </div>
   )
 }

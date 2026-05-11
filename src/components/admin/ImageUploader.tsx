@@ -41,16 +41,15 @@ export function ImageUploader({ label, currentUrl, bucket, onUploaded }: Props) 
   }
 
   return (
-    <div className="mb-8">
-      <p className="text-white font-bold mb-3">{label}</p>
+    <div>
       {preview && (
-        <div className="mb-4 relative h-40 w-auto inline-block">
+        <div className="mb-5 relative inline-block">
           <Image
             src={preview}
             alt={label}
-            width={320}
-            height={160}
-            className="h-40 w-auto object-contain bg-black/30 border border-white/10"
+            width={400}
+            height={200}
+            className="h-48 w-auto object-contain bg-gray-100 border border-gray-200 rounded-md"
           />
         </div>
       )}
@@ -65,9 +64,9 @@ export function ImageUploader({ label, currentUrl, bucket, onUploaded }: Props) 
         <button
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="flex items-center gap-2 bg-roof-red text-white px-4 py-2 text-sm font-bold uppercase hover:bg-red-700 transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 bg-roof-red text-white rounded-md px-5 py-2.5 text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
         >
-          <Upload size={14} />
+          <Upload size={16} />
           {uploading ? 'Enviando...' : `Carregar Nova ${label}`}
         </button>
       </div>

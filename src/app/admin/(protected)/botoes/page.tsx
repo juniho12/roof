@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { ToggleRow } from '@/components/admin/ToggleRow'
@@ -32,37 +32,41 @@ export default function BotoesPage() {
 
   return (
     <div>
-      <PageHeader title="BotÃµes e Links" description="Gerencie as URLs e status de todos os botÃµes e links" />
-      <div className="max-w-2xl space-y-8">
-        <div className="bg-roof-sidebar border border-white/10 p-6">
-          <h2 className="text-white font-bold mb-2">BotÃµes</h2>
-          <p className="text-white/40 text-xs mb-4">BotÃµes com imagem que aparecem na LP</p>
-          {buttons.map((btn) => (
-            <ToggleRow
-              key={btn.id}
-              label={btn.name}
-              value={btn.link_url ?? ''}
-              placeholder="URL de destino"
-              active={btn.is_active}
-              onChange={(url) => updateButton(btn.id, 'link_url', url)}
-              onToggle={(active) => updateButton(btn.id, 'is_active', active)}
-            />
-          ))}
+      <PageHeader title="Botões e Links" description="Gerencie as URLs e status de todos os botões e links" />
+      <div className="space-y-6">
+        <div className="bg-white border border-gray-200 rounded-lg p-8">
+          <h2 className="font-display text-3xl text-gray-900 mb-1">Botões</h2>
+          <p className="text-gray-500 text-sm mb-6">Botões com imagem que aparecem na Landing Page</p>
+          <div>
+            {buttons.map((btn) => (
+              <ToggleRow
+                key={btn.id}
+                label={btn.name}
+                value={btn.link_url ?? ''}
+                placeholder="URL de destino"
+                active={btn.is_active}
+                onChange={(url) => updateButton(btn.id, 'link_url', url)}
+                onToggle={(active) => updateButton(btn.id, 'is_active', active)}
+              />
+            ))}
+          </div>
         </div>
-        <div className="bg-roof-sidebar border border-white/10 p-6">
-          <h2 className="text-white font-bold mb-2">Links de Texto</h2>
-          <p className="text-white/40 text-xs mb-4">Links que aparecem na LP</p>
-          {links.map((link) => (
-            <ToggleRow
-              key={link.id}
-              label={link.text}
-              value={link.link_url ?? ''}
-              placeholder="URL de destino"
-              active={link.is_active}
-              onChange={(url) => updateLink(link.id, 'link_url', url)}
-              onToggle={(active) => updateLink(link.id, 'is_active', active)}
-            />
-          ))}
+        <div className="bg-white border border-gray-200 rounded-lg p-8">
+          <h2 className="font-display text-3xl text-gray-900 mb-1">Links de Texto</h2>
+          <p className="text-gray-500 text-sm mb-6">Links que aparecem na Landing Page</p>
+          <div>
+            {links.map((link) => (
+              <ToggleRow
+                key={link.id}
+                label={link.text}
+                value={link.link_url ?? ''}
+                placeholder="URL de destino"
+                active={link.is_active}
+                onChange={(url) => updateLink(link.id, 'link_url', url)}
+                onToggle={(active) => updateLink(link.id, 'is_active', active)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
