@@ -1,8 +1,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
-  distDir: 'dist',
   images: {
     minimumCacheTTL: 60 * 60 * 24 * 30,
     formats: ['image/avif', 'image/webp'],
