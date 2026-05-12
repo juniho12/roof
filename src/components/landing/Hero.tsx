@@ -87,18 +87,16 @@ export function Hero({ hero, buttons, links, socialLinks }: Props) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
 
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
-        {hero.logo_url && (
-          <div className="mb-6">
-            <Image quality={60}
-              src={hero.logo_url}
-              alt="ROOF! Produtora"
-              width={400}
-              height={120}
-              className="h-16 md:h-24 lg:h-28 w-auto object-contain"
-              priority
-            />
-          </div>
-        )}
+        <div className="mb-6">
+          <Image
+            src="/logo.png"
+            alt="ROOF! Produtora"
+            width={400}
+            height={120}
+            className="h-16 md:h-24 lg:h-28 w-auto object-contain"
+            priority
+          />
+        </div>
 
         <p className="text-white/90 text-lg md:text-xl mb-10">
           Valor e respeito ao Funk desde 2019!

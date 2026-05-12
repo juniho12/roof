@@ -12,6 +12,7 @@ type Props = {
 
 function ImageCard({ images }: { images: SliderImage[] }) {
   const [idx, setIdx] = useState(0)
+  const [visited, setVisited] = useState<Set<number>>(() => new Set([0]))
   const active = images.filter((i) => i.is_active)
 
   useEffect(() => {
@@ -19,6 +20,10 @@ function ImageCard({ images }: { images: SliderImage[] }) {
     const t = setInterval(() => setIdx((i) => (i + 1) % active.length), 5000)
     return () => clearInterval(t)
   }, [active.length])
+
+  useEffect(() => {
+    setVisited((s) => (s.has(idx) ? s : new Set(s).add(idx)))
+  }, [idx])
 
   if (active.length === 0) {
     return <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
@@ -48,14 +53,16 @@ function ImageCard({ images }: { images: SliderImage[] }) {
             i === idx ? 'opacity-100' : 'opacity-0'
           } ${img.link_url ? 'cursor-pointer' : ''}`}
         >
-          <Image quality={60}
-            src={img.image_url}
-            alt={img.alt_text ?? `Slide ${i + 1}`}
-            fill
-            className="object-cover"
-            sizes="(min-width: 768px) 50vw, 100vw"
-            loading="lazy"
-          />
+          {visited.has(i) && (
+            <Image quality={60}
+              src={img.image_url}
+              alt={img.alt_text ?? `Slide ${i + 1}`}
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              loading="lazy"
+            />
+          )}
         </div>
       ))}
       {active.length > 1 && (
@@ -97,6 +104,7 @@ function ImageCard({ images }: { images: SliderImage[] }) {
 
 function VideoCard({ videos }: { videos: VideoCarouselItem[] }) {
   const [idx, setIdx] = useState(0)
+  const [visited, setVisited] = useState<Set<number>>(() => new Set([0]))
   const active = videos.filter((v) => v.is_active)
 
   useEffect(() => {
@@ -104,6 +112,10 @@ function VideoCard({ videos }: { videos: VideoCarouselItem[] }) {
     const t = setInterval(() => setIdx((i) => (i + 1) % active.length), 5000)
     return () => clearInterval(t)
   }, [active.length])
+
+  useEffect(() => {
+    setVisited((s) => (s.has(idx) ? s : new Set(s).add(idx)))
+  }, [idx])
 
   if (active.length === 0) {
     return <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
@@ -132,17 +144,18 @@ function VideoCard({ videos }: { videos: VideoCarouselItem[] }) {
             i === idx ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {v.thumbnail_url ? (
+          {v.thumbnail_url && visited.has(i) ? (
             <Image quality={60}
               src={v.thumbnail_url}
               alt={v.title ?? `Vídeo ${i + 1}`}
               fill
               className="object-cover"
               sizes="(min-width: 768px) 50vw, 100vw"
+              loading="lazy"
             />
-          ) : (
+          ) : !v.thumbnail_url ? (
             <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
-          )}
+          ) : null}
         </div>
       ))}
       <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-10">

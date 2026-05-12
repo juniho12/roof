@@ -3,30 +3,23 @@ import type { FooterSettings } from '@/types/database'
 
 type Props = {
   settings: FooterSettings
-  logoUrl?: string | null
 }
 
-export function Footer({ settings, logoUrl }: Props) {
+export function Footer({ settings }: Props) {
   return (
     <footer className="bg-[#0a0002] border-t border-white/10">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-            {logoUrl ? (
-              <Image quality={60}
-                src={logoUrl}
-                alt="ROOF! Produtora"
-                width={240}
-                height={80}
-                className="h-10 w-auto object-contain"
-                loading="lazy"
-                sizes="240px"
-              />
-            ) : (
-              <span className="font-display text-2xl text-white">
-                ROOF<span className="text-roof-red">!</span> PRODUTORA
-              </span>
-            )}
+            <Image
+              src="/logo.png"
+              alt="ROOF! Produtora"
+              width={240}
+              height={80}
+              className="h-10 w-auto object-contain"
+              loading="lazy"
+              sizes="240px"
+            />
             <div className="text-white/60 text-sm">
               {settings.email && <p>{settings.email}</p>}
               {settings.phone && <p>{settings.phone}</p>}

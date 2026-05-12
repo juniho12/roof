@@ -6,7 +6,7 @@ import { StatsBanner } from '@/components/landing/StatsBanner'
 import { ProdutoraSection } from '@/components/landing/ProdutoraSection'
 import { Footer } from '@/components/landing/Footer'
 
-export const revalidate = 300
+export const revalidate = 3600
 
 async function getData() {
   const supabase = await createClient()
@@ -75,10 +75,7 @@ export default async function HomePage() {
       <AboutSection />
       <StatsBanner />
       <ProdutoraSection images={data.aboutImages} />
-      <Footer
-        settings={data.footerSettings}
-        logoUrl={data.hero.logo_url}
-      />
+      <Footer settings={data.footerSettings} />
     </main>
   )
 }
