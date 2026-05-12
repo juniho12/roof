@@ -5,6 +5,7 @@ import { AboutSection } from '@/components/landing/AboutSection'
 import { StatsBanner } from '@/components/landing/StatsBanner'
 import { ProdutoraSection } from '@/components/landing/ProdutoraSection'
 import { Footer } from '@/components/landing/Footer'
+import { LazyMount } from '@/components/ui/LazyMount'
 
 export const revalidate = 3600
 
@@ -66,16 +67,22 @@ export default async function HomePage() {
         socialLinks={data.footerLinks}
       />
       {data.contentSection && (
-        <PhotoSlider
-          images={data.sliderImages}
-          videos={data.videos}
-          section={data.contentSection}
-        />
+        <LazyMount minHeight={600}>
+          <PhotoSlider
+            images={data.sliderImages}
+            videos={data.videos}
+            section={data.contentSection}
+          />
+        </LazyMount>
       )}
       <AboutSection />
       <StatsBanner />
-      <ProdutoraSection images={data.aboutImages} />
-      <Footer settings={data.footerSettings} />
+      <LazyMount minHeight={700}>
+        <ProdutoraSection images={data.aboutImages} />
+      </LazyMount>
+      <LazyMount minHeight={200}>
+        <Footer settings={data.footerSettings} />
+      </LazyMount>
     </main>
   )
 }
