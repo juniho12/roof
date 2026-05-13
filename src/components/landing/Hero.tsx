@@ -77,13 +77,27 @@ export function Hero({ hero, buttons, links, socialLinks }: Props) {
 
   return (
     <section
-      className="relative min-h-[80vh] flex flex-col items-center justify-center py-16"
-      style={{
-        background: hero.background_image_url
-          ? `url(${hero.background_image_url}) center/cover no-repeat`
-          : 'linear-gradient(180deg, hsl(280 30% 15%) 0%, hsl(280 20% 8%) 50%, hsl(0 0% 5%) 100%)',
-      }}
+      className="relative min-h-[80vh] flex flex-col items-center justify-center py-16 overflow-hidden"
+      style={
+        hero.background_image_url
+          ? undefined
+          : {
+              background:
+                'linear-gradient(180deg, hsl(280 30% 15%) 0%, hsl(280 20% 8%) 50%, hsl(0 0% 5%) 100%)',
+            }
+      }
     >
+      {hero.background_image_url && (
+        <Image
+          src={hero.background_image_url}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          quality={60}
+          className="object-cover -z-10"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
 
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
