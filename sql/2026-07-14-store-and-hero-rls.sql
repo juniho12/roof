@@ -1,5 +1,15 @@
--- Loja ROOF: store_settings table + store-images bucket + hero RLS fix
--- Idempotent. Run in the Supabase SQL editor.
+-- Loja ROOF: store_settings table + store-images bucket
+-- Idempotent. Mirrors the existing project security model: reads are public,
+-- writes are gated by public.is_admin() for role `authenticated`.
+--
+-- NOTE ON THE HERO BACKGROUND BUG:
+-- The hero RLS is NOT broken. Verified against the live DB: hero_section has a
+-- correct UPDATE policy (USING is_admin()) and the hero-images bucket has correct
+-- INSERT/UPDATE/DELETE policies (is_admin()); a valid admin session updates the
+-- row and uploads successfully. The "row-level security policy" error occurs when
+-- the request arrives WITHOUT a valid admin session (expired/stale token -> anon
+-- -> is_admin() = false). Fix that by re-authenticating in /admin, not by changing
+-- the schema. This script therefore does NOT touch hero_section or hero-images.
 
 -- 1. Table -------------------------------------------------------------------
 create table if not exists public.store_settings (
@@ -17,86 +27,53 @@ insert into public.store_settings (link_url)
 select null
 where not exists (select 1 from public.store_settings);
 
--- 3. RLS on store_settings ---------------------------------------------------
+-- 3. RLS on store_settings (mirror hero_section) -----------------------------
 alter table public.store_settings enable row level security;
 
-drop policy if exists "store_settings public read" on public.store_settings;
-create policy "store_settings public read"
+drop policy if exists "Anyone can view store settings" on public.store_settings;
+create policy "Anyone can view store settings"
   on public.store_settings for select
   using (true);
 
-drop policy if exists "store_settings authenticated write" on public.store_settings;
-create policy "store_settings authenticated write"
-  on public.store_settings for all
+drop policy if exists "Admins can insert store settings" on public.store_settings;
+create policy "Admins can insert store settings"
+  on public.store_settings for insert
   to authenticated
-  using (true)
-  with check (true);
+  with check (is_admin());
 
--- 4. store-images bucket -----------------------------------------------------
+drop policy if exists "Admins can update store settings" on public.store_settings;
+create policy "Admins can update store settings"
+  on public.store_settings for update
+  to authenticated
+  using (is_admin());
+
+drop policy if exists "Admins can delete store settings" on public.store_settings;
+create policy "Admins can delete store settings"
+  on public.store_settings for delete
+  to authenticated
+  using (is_admin());
+
+-- 4. store-images bucket (public, mirror hero-images) ------------------------
 insert into storage.buckets (id, name, public)
 values ('store-images', 'store-images', true)
 on conflict (id) do nothing;
 
-drop policy if exists "store-images public read" on storage.objects;
-create policy "store-images public read"
-  on storage.objects for select
-  using (bucket_id = 'store-images');
-
-drop policy if exists "store-images authenticated write" on storage.objects;
-create policy "store-images authenticated write"
+-- Public read is served directly (bucket is public); no SELECT policy needed,
+-- matching the existing hero-/slider-/about-images buckets.
+drop policy if exists "Admins can upload store images" on storage.objects;
+create policy "Admins can upload store images"
   on storage.objects for insert
   to authenticated
-  with check (bucket_id = 'store-images');
+  with check (bucket_id = 'store-images' and is_admin());
 
-drop policy if exists "store-images authenticated update" on storage.objects;
-create policy "store-images authenticated update"
+drop policy if exists "Admins can update store images" on storage.objects;
+create policy "Admins can update store images"
   on storage.objects for update
   to authenticated
-  using (bucket_id = 'store-images')
-  with check (bucket_id = 'store-images');
+  using (bucket_id = 'store-images' and is_admin());
 
-drop policy if exists "store-images authenticated delete" on storage.objects;
-create policy "store-images authenticated delete"
+drop policy if exists "Admins can delete store images" on storage.objects;
+create policy "Admins can delete store images"
   on storage.objects for delete
   to authenticated
-  using (bucket_id = 'store-images');
-
--- 5. Hero RLS fix ------------------------------------------------------------
--- The reported bug: changing the hero background image fails with a
--- row-level-security error. Ensure both the table UPDATE policy and the
--- hero-images bucket write policies exist. Safe whichever was missing.
-alter table public.hero_section enable row level security;
-
-drop policy if exists "hero_section public read" on public.hero_section;
-create policy "hero_section public read"
-  on public.hero_section for select
-  using (true);
-
-drop policy if exists "hero_section authenticated write" on public.hero_section;
-create policy "hero_section authenticated write"
-  on public.hero_section for all
-  to authenticated
-  using (true)
-  with check (true);
-
-insert into storage.buckets (id, name, public)
-values ('hero-images', 'hero-images', true)
-on conflict (id) do nothing;
-
-drop policy if exists "hero-images public read" on storage.objects;
-create policy "hero-images public read"
-  on storage.objects for select
-  using (bucket_id = 'hero-images');
-
-drop policy if exists "hero-images authenticated write" on storage.objects;
-create policy "hero-images authenticated write"
-  on storage.objects for insert
-  to authenticated
-  with check (bucket_id = 'hero-images');
-
-drop policy if exists "hero-images authenticated update" on storage.objects;
-create policy "hero-images authenticated update"
-  on storage.objects for update
-  to authenticated
-  using (bucket_id = 'hero-images')
-  with check (bucket_id = 'hero-images');
+  using (bucket_id = 'store-images' and is_admin());
