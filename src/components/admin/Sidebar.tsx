@@ -10,6 +10,7 @@ import {
   Link2,
   Share2,
   Settings,
+  ShoppingBag,
   LogOut,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -19,6 +20,7 @@ const navItems = [
   { href: '/admin/hero', label: 'Hero Section', icon: ImageIcon },
   { href: '/admin/slider', label: 'Slider de Imagens', icon: SlidersHorizontal },
   { href: '/admin/produtora', label: 'Seção Produtora', icon: ImageIcon },
+  { href: '/admin/loja', label: 'Loja ROOF', icon: ShoppingBag },
   { href: '/admin/videos', label: 'Carrossel de Vídeos', icon: Film },
   { href: '/admin/botoes', label: 'Botões e Links', icon: Link2 },
   { href: '/admin/footer-links', label: 'Links do Footer', icon: Share2 },

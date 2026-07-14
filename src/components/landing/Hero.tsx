@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Ticket, QrCode, Users, CircleHelp } from 'lucide-react'
+import { Ticket, QrCode, Users, CircleHelp, ShoppingBag } from 'lucide-react'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import type { HeroSection, HeroButton, HeroLink, FooterLink } from '@/types/database'
 
@@ -8,9 +8,10 @@ type Props = {
   buttons: HeroButton[]
   links: HeroLink[]
   socialLinks: FooterLink[]
+  storeUrl: string | null
 }
 
-export function Hero({ hero, buttons, links, socialLinks }: Props) {
+export function Hero({ hero, buttons, links, socialLinks, storeUrl }: Props) {
   const [btn1, btn2] = buttons
   const [link1, link2] = links
 
@@ -124,6 +125,19 @@ export function Hero({ hero, buttons, links, socialLinks }: Props) {
         <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mb-8">
           {renderLink(link1, Users, 'Faça parte do nosso time')}
           {renderLink(link2, CircleHelp, 'Outras dúvidas e suporte')}
+          <a
+            href={storeUrl ?? '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-lg transition-all ${
+              storeUrl
+                ? 'bg-white/10 text-white hover:bg-white/20 cursor-pointer backdrop-blur-sm'
+                : 'bg-white/5 text-white/30 cursor-not-allowed pointer-events-none'
+            }`}
+          >
+            <ShoppingBag className="w-4 h-4" />
+            <span className="text-sm">LOJA ROOF</span>
+          </a>
         </div>
 
         {socialLinks.length > 0 && (

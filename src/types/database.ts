@@ -105,3 +105,13 @@ export type Profile = {
   created_at: string
   updated_at: string
 }
+
+export type StoreSettings = {
+  id: string
+  link_url: string | null
+  image_1_url: string | null
+  image_2_url: string | null
+  image_3_url: string | null
+  created_at: string
+  updated_at: string
+}

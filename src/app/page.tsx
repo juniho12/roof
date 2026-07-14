@@ -4,6 +4,7 @@ import { PhotoSlider } from '@/components/landing/PhotoSlider'
 import { AboutSection } from '@/components/landing/AboutSection'
 import { StatsBanner } from '@/components/landing/StatsBanner'
 import { ProdutoraSection } from '@/components/landing/ProdutoraSection'
+import { StoreSection } from '@/components/landing/StoreSection'
 import { Footer } from '@/components/landing/Footer'
 import { LazyMount } from '@/components/ui/LazyMount'
 
@@ -22,6 +23,7 @@ async function getData() {
     { data: aboutImages },
     { data: footerSettings },
     { data: footerLinks },
+    { data: storeSettings },
   ] = await Promise.all([
     supabase.from('hero_section').select('*').single(),
     supabase.from('hero_buttons').select('*').eq('is_active', true).order('display_order'),
@@ -36,6 +38,7 @@ async function getData() {
     supabase.from('about_images').select('*').eq('is_active', true).order('display_order'),
     supabase.from('footer_settings').select('*').single(),
     supabase.from('footer_links').select('*').eq('is_active', true).order('display_order'),
+    supabase.from('store_settings').select('*').single(),
   ])
 
   return {
@@ -48,6 +51,7 @@ async function getData() {
     aboutImages: aboutImages ?? [],
     footerSettings,
     footerLinks: footerLinks ?? [],
+    storeSettings,
   }
 }
 
@@ -65,6 +69,7 @@ export default async function HomePage() {
         buttons={data.buttons}
         links={data.links}
         socialLinks={data.footerLinks}
+        storeUrl={data.storeSettings?.link_url ?? null}
       />
       {data.contentSection && (
         <LazyMount minHeight={600}>
@@ -80,6 +85,11 @@ export default async function HomePage() {
       <LazyMount minHeight={700}>
         <ProdutoraSection images={data.aboutImages} />
       </LazyMount>
+      {data.storeSettings && (
+        <LazyMount minHeight={500}>
+          <StoreSection settings={data.storeSettings} />
+        </LazyMount>
+      )}
       <LazyMount minHeight={200}>
         <Footer settings={data.footerSettings} />
       </LazyMount>
