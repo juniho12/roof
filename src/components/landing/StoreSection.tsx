@@ -14,7 +14,7 @@ export function StoreSection({ settings }: Props) {
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white mb-3">
-            LOJA OFICIAL DA ROOF
+            LOJA OFICIAL DA ROOF!
           </h2>
           <p className="text-white/80 max-w-2xl mx-auto">
             Retire sua peça favorita em nossos eventos ou combine a retirada

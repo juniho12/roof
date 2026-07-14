@@ -136,7 +136,7 @@ export function Hero({ hero, buttons, links, socialLinks, storeUrl }: Props) {
             }`}
           >
             <ShoppingBag className="w-4 h-4" />
-            <span className="text-sm">Loja ROOF</span>
+            <span className="text-sm">Loja ROOF!</span>
           </a>
         </div>
 
