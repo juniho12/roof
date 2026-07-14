@@ -24,9 +24,11 @@ export function ImageUploader({ label, currentUrl, bucket, onUploaded }: Props) 
     setUploading(true)
     const filename = `${label.toLowerCase().replace(/\s/g, '-')}-${Date.now()}.${file.name.split('.').pop()}`
 
-    const { error } = await supabase.storage.from(bucket).upload(filename, file, {
-      upsert: true,
-    })
+    // No upsert: filenames are timestamped (always unique), so there is never a
+    // real conflict. The storage-api upsert path fails RLS (auth claims not
+    // propagated) with the project's asymmetric JWT, while the plain-insert path
+    // used by the slider/produtora uploaders works. Match that working path.
+    const { error } = await supabase.storage.from(bucket).upload(filename, file)
 
     if (error) {
       alert(`Erro ao fazer upload: ${error.message}`)
